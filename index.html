@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Портфолио · Винник Полина</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      transition: background 0.3s ease, color 0.3s ease;
+      line-height: 1.5;
+      padding: 2rem 1rem;
+    }
+
+    /* ===== ТЁМНАЯ ТЕМА (по умолчанию) ===== */
+    :root {
+      --bg: #18181e;
+      --text: #ececec;
+      --card: #24242e;
+      --card-border: #3c3c4a;
+      --shadow: 0 12px 28px rgba(0,0,0,0.5);
+      --tag-bg: #333340;
+      --tag-text: #e0e0e0;
+      --modal-overlay: rgba(0,0,0,0.7);
+      --toggle-bg: #4a4a5a;
+      --toggle-dot: #24242e;
+      --accent: #4a9eff;
+      --accent-hover: #6db3ff;
+      --border-light: #3c3c4a;
+      --about-bg: rgba(74, 158, 255, 0.08);
+      --about-border: rgba(74, 158, 255, 0.4);
+      --glow-color: rgba(74, 158, 255, 0.5);
+      --heading-color: #ffffff;
+    }
+
+    /* ===== СВЕТЛАЯ ТЕМА ===== */
+    [data-theme="light"] {
+      --bg: #f8f7f4;
+      --text: #1e1e2a;
+      --card: #ffffff;
+      --card-border: #e0dfd8;
+      --shadow: 0 12px 28px rgba(0,0,0,0.06);
+      --tag-bg: #eae9e2;
+      --tag-text: #2d2d3a;
+      --modal-overlay: rgba(0,0,0,0.4);
+      --toggle-bg: #d1d1d1;
+      --toggle-dot: #ffffff;
+      --accent: #cc3333;
+      --accent-hover: #ee5555;
+      --border-light: #e0dfd8;
+      --about-bg: rgba(204, 51, 51, 0.06);
+      --about-border: rgba(204, 51, 51, 0.3);
+      --glow-color: rgba(204, 51, 51, 0.35);
+      --heading-color: #1e1e2a;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      background: var(--card);
+      border-radius: 2.5rem;
+      padding: 2.5rem 2.2rem;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--card-border);
+      transition: background 0.3s, border 0.3s;
+    }
+
+    /* ===== переключатель темы (тумблер) ===== */
+    .theme-toggle {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      margin-bottom: 1.8rem;
+      gap: 0.8rem;
+    }
+
+    .theme-toggle-label {
+      font-size: 0.85rem;
+      font-weight: 500;
+      opacity: 0.7;
+      transition: 0.3s;
+    }
+
+    .toggle-switch {
+      position: relative;
+      width: 52px;
+      height: 28px;
+      background: var(--toggle-bg);
+      border-radius: 40px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      flex-shrink: 0;
+      border: none;
+      padding: 0;
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .toggle-switch:hover {
+      box-shadow: 0 0 0 3px rgba(74, 158, 255, 0.3);
+    }
+
+    [data-theme="light"] .toggle-switch:hover {
+      box-shadow: 0 0 0 3px rgba(204, 51, 51, 0.3);
+    }
+
+    .toggle-switch .toggle-dot {
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      width: 22px;
+      height: 22px;
+      background: var(--toggle-dot);
+      border-radius: 50%;
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    }
+
+    .toggle-switch.active .toggle-dot {
+      transform: translateX(24px);
+    }
+
+    .toggle-switch.active {
+      background: var(--accent);
+    }
+
+    /* профиль */
+    .profile {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 2rem;
+      margin-bottom: 2.8rem;
+    }
+
+    /* ===== ИМЯ: цвет зависит от темы ===== */
+    .profile-info h1 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 600;
+      font-size: 2.8rem;
+      letter-spacing: -0.01em;
+      color: var(--heading-color);
+      text-shadow: 
+        0 0 10px var(--glow-color),
+        0 0 20px var(--glow-color),
+        0 0 40px var(--glow-color);
+      margin-bottom: 0.3rem;
+      transition: color 0.3s ease, text-shadow 0.3s ease;
+    }
+
+    .profile-info .subhead {
+      font-size: 1.1rem;
+      font-weight: 400;
+      color: var(--text);
+      opacity: 0.8;
+      border-left: 4px solid var(--accent);
+      padding-left: 1rem;
+      margin-top: 0.2rem;
+    }
+
+    .badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem 1.5rem;
+      margin-top: 1rem;
+    }
+
+    .badge {
+      background: var(--tag-bg);
+      color: var(--tag-text);
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 0.3rem 1rem;
+      border-radius: 40px;
+      transition: 0.2s;
+      border: 1px solid transparent;
+    }
+
+    .badge:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: transparent;
+    }
+
+    .section {
+      margin-top: 2.8rem;
+    }
+
+    /* ===== ЗАГОЛОВКИ: цвет зависит от темы ===== */
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-weight: 600;
+      font-size: 1.8rem;
+      letter-spacing: -0.02em;
+      border-bottom: 2px solid var(--border-light);
+      padding-bottom: 0.3rem;
+      margin-bottom: 1.6rem;
+      color: var(--heading-color);
+      text-shadow: 
+        0 0 10px var(--glow-color),
+        0 0 20px var(--glow-color),
+        0 0 40px var(--glow-color);
+      transition: color 0.3s ease, text-shadow 0.3s ease;
+    }
+
+    .about-box {
+      background: var(--about-bg);
+      border: 2px solid var(--about-border);
+      border-radius: 1.5rem;
+      padding: 1.8rem 2rem;
+      margin-bottom: 0.5rem;
+      transition: border-color 0.3s, background 0.3s;
+    }
+
+    .about-box:hover {
+      border-color: var(--accent);
+    }
+
+    .about-box p {
+      font-size: 1.05rem;
+      line-height: 1.8;
+      margin-bottom: 0.5rem;
+    }
+
+    .about-box p:last-child {
+      margin-bottom: 0;
+    }
+
+    .btn-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin: 1rem 0 0.5rem;
+    }
+
+    .btn-diploma, .btn-goals {
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: 60px;
+      padding: 0.7rem 2rem;
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      font-size: 1rem;
+      color: var(--text);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+    }
+
+    .btn-diploma:hover, .btn-goals:hover {
+      background: var(--accent);
+      color: #1e1e2a;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 4px rgba(74, 158, 255, 0.25);
+    }
+
+    [data-theme="light"] .btn-diploma:hover,
+    [data-theme="light"] .btn-goals:hover {
+      box-shadow: 0 0 0 4px rgba(204, 51, 51, 0.25);
+    }
+
+    .hobby-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.7rem 1rem;
+      margin-top: 0.5rem;
+    }
+
+    .hobby-tag {
+      background: var(--tag-bg);
+      padding: 0.4rem 1.2rem;
+      border-radius: 40px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      border: 1px solid transparent;
+      transition: 0.2s;
+    }
+
+    .hobby-tag:hover {
+      border-color: var(--accent);
+      background: transparent;
+      color: var(--accent);
+    }
+
+    .social-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem 1.2rem;
+      margin-top: 1.2rem;
+    }
+
+    .social-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      padding: 0.5rem 1.2rem;
+      border-radius: 60px;
+      font-weight: 500;
+      font-size: 0.95rem;
+      color: var(--text);
+      text-decoration: none;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+    }
+
+    .social-btn svg {
+      width: 22px;
+      height: 22px;
+      fill: currentColor;
+      transition: 0.2s;
+    }
+
+    .social-btn:hover {
+      background: var(--accent);
+      color: #1e1e2a;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 4px rgba(74, 158, 255, 0.25);
+    }
+
+    [data-theme="light"] .social-btn:hover {
+      box-shadow: 0 0 0 4px rgba(204, 51, 51, 0.25);
+    }
+
+    .social-btn:hover svg {
+      fill: #1e1e2a;
+    }
+
+    .lang-block {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.2rem 2.5rem;
+      background: var(--tag-bg);
+      padding: 1.2rem 1.8rem;
+      border-radius: 2rem;
+      margin: 0.8rem 0 0.4rem;
+    }
+
+    .lang-item {
+      font-weight: 500;
+    }
+    .lang-item small {
+      opacity: 0.6;
+      font-weight: 400;
+    }
+
+    hr {
+      border: none;
+      border-top: 1px solid var(--card-border);
+      margin: 2rem 0 0.8rem;
+    }
+
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--modal-overlay);
+      backdrop-filter: blur(4px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal {
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: 2rem;
+      padding: 2rem 2.2rem;
+      max-width: 600px;
+      width: 90%;
+      max-height: 80vh;
+      overflow-y: auto;
+      box-shadow: 0 24px 48px rgba(0,0,0,0.2);
+      color: var(--text);
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .modal-header h2 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 600;
+      font-size: 1.6rem;
+      color: var(--heading-color);
+      text-shadow: 
+        0 0 10px var(--glow-color),
+        0 0 20px var(--glow-color),
+        0 0 40px var(--glow-color);
+      transition: color 0.3s ease, text-shadow 0.3s ease;
+    }
+
+    .modal-close {
+      background: transparent;
+      border: none;
+      font-size: 1.8rem;
+      cursor: pointer;
+      color: var(--text);
+      transition: 0.2s;
+      line-height: 1;
+    }
+
+    .modal-close:hover {
+      color: var(--accent);
+      transform: scale(1.1);
+    }
+
+    .modal-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .modal-list li {
+      padding: 0.7rem 0;
+      border-bottom: 1px solid var(--card-border);
+      font-weight: 400;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .modal-list li:last-child {
+      border-bottom: none;
+    }
+
+    .modal-list .diploma-name {
+      font-weight: 600;
+    }
+
+    .modal-list .diploma-place {
+      opacity: 0.7;
+      font-weight: 400;
+    }
+
+    .modal-list .diploma-year {
+      font-size: 0.8rem;
+      opacity: 0.5;
+      font-weight: 400;
+      margin-left: 0.5rem;
+    }
+
+    .goals-text {
+      font-size: 1.1rem;
+      line-height: 1.8;
+      padding: 0.5rem 0;
+    }
+
+    @media (max-width: 640px) {
+      .container { padding: 1.5rem; }
+      .profile-info h1 { font-size: 2.2rem; }
+      .profile { flex-direction: column; align-items: flex-start; }
+      .modal { padding: 1.5rem; }
+      .about-box { padding: 1.2rem 1.2rem; }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <!-- переключатель темы (тумблер) -->
+  <div class="theme-toggle">
+    <span class="theme-toggle-label" id="themeLabel">Тёмная</span>
+    <button class="toggle-switch active" id="themeToggle" aria-label="Переключить тему">
+      <span class="toggle-dot"></span>
+    </button>
+  </div>
+
+  <div class="profile">
+    <div class="profile-info">
+      <h1>Винник Полина</h1>
+      <div class="subhead">Портфолио для поступления</div>
+      <div class="badge-row">
+        <span class="badge">9.9 / 10 средний балл</span>
+        <span class="badge">Английский B2 · Немецкий A2</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2 class="section-title">Обо мне</h2>
+    <div class="about-box">
+      <p>
+        Меня зовут Винник Полина, я учусь в 8 классе. Свободно владею тремя языками:
+        белорусским, русским и украинским. Также изучаю английский (уровень B2)
+        и немецкий (уровень A2).
+      </p>
+      <p>
+        Увлекаюсь физикой, биологией и рисованием. Активно участвую в олимпиадах
+        по естественным наукам, стремлюсь к углублённому изучению химии и биологии,
+        чтобы в будущем связать свою жизнь с фармацевтикой.
+      </p>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2 class="section-title">Достижения</h2>
+    <div class="btn-row">
+      <button class="btn-diploma" id="openDiplomaBtn">Мои дипломы</button>
+      <button class="btn-goals" id="openGoalsBtn">Цели</button>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2 class="section-title">Языки и успеваемость</h2>
+    <div class="lang-block">
+      <span class="lang-item">Английский <strong>B2</strong> <small>(Upper-Intermediate)</small></span>
+      <span class="lang-item">Немецкий <strong>A2</strong> <small>(базовый)</small></span>
+      <span class="lang-item">Средний балл <strong>9.9 / 10</strong> <small>(годовые отметки)</small></span>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2 class="section-title">Хобби и интересы</h2>
+    <div class="hobby-tags">
+      <span class="hobby-tag">Рисование</span>
+      <span class="hobby-tag">Чтение</span>
+      <span class="hobby-tag">Изучение языков</span>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2 class="section-title">Социальные сети</h2>
+    <div class="social-links">
+      <a href="#" class="social-btn" target="_blank" aria-label="Telegram">
+        <svg viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+        Telegram
+      </a>
+      <a href="#" class="social-btn" target="_blank" aria-label="Instagram">
+        <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+        Instagram
+      </a>
+      <a href="mailto:vinnyk.p.v@gmail.com" class="social-btn" target="_blank" aria-label="Email">
+        <svg viewBox="0 0 24 24"><path d="M1.5 8.67v8.58a3 3 0 0 0 3 3h15a3 3 0 0 0 3-3V8.67l-8.928 5.493a3 3 0 0 1-3.144 0L1.5 8.67z"/><path d="M22.5 6.908V6.75a3 3 0 0 0-3-3h-15a3 3 0 0 0-3 3v.158l9.714 5.978a1.5 1.5 0 0 0 1.572 0L22.5 6.908z"/></svg>
+        Почта
+      </a>
+    </div>
+  </div>
+
+  <hr>
+  <div style="text-align: right; font-size: 0.8rem; opacity: 0.5; margin-top: 1rem;">
+    2026 · портфолио для лицея
+  </div>
+</div>
+
+<!-- Модальное окно: дипломы -->
+<div class="modal-overlay" id="diplomaModal">
+  <div class="modal">
+    <div class="modal-header">
+      <h2>Мои дипломы</h2>
+      <button class="modal-close" id="closeDiplomaBtn">&times;</button>
+    </div>
+    <ul class="modal-list">
+      <li><span class="diploma-name">Биология (район)</span> <span class="diploma-place">1 место</span> <span class="diploma-year">2025–2026</span></li>
+      <li><span class="diploma-name">Биология (город)</span> <span class="diploma-place">1 место</span> <span class="diploma-year">2025–2026</span></li>
+      <li><span class="diploma-name">Химия (район)</span> <span class="diploma-place">3 место</span> <span class="diploma-year">2025–2026</span></li>
+      <li><span class="diploma-name">Русский язык (район)</span> <span class="diploma-place">2 степень</span> <span class="diploma-year">2025–2026</span></li>
+      <li><span class="diploma-name">Русский язык (город)</span> <span class="diploma-place">1 место</span> <span class="diploma-year">2025–2026</span></li>
+      <li><span class="diploma-name">Физика (команда, город)</span> <span class="diploma-place">1 место</span> <span class="diploma-year">2025–2026</span></li>
+      <li><span class="diploma-name">Химия (город)</span> <span class="diploma-place">3 место</span> <span class="diploma-year">2025–2026</span></li>
+    </ul>
+  </div>
+</div>
+
+<!-- Модальное окно: цели -->
+<div class="modal-overlay" id="goalsModal">
+  <div class="modal">
+    <div class="modal-header">
+      <h2>Мои цели</h2>
+      <button class="modal-close" id="closeGoalsBtn">&times;</button>
+    </div>
+    <div class="goals-text">
+      <p>Хочу поступить в Нахимбио в лицей БГУ и обучиться на фармацевта.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+  (function() {
+    const toggleBtn = document.getElementById('themeToggle');
+    const themeLabel = document.getElementById('themeLabel');
+    const root = document.documentElement;
+
+    let currentTheme = 'dark';
+    const storedTheme = localStorage.getItem('theme');
+    if (storedTheme) {
+      currentTheme = storedTheme;
+    }
+    
+    applyTheme(currentTheme);
+
+    toggleBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      const next = currentTheme === 'dark' ? 'light' : 'dark';
+      applyTheme(next);
+    });
+
+    function applyTheme(theme) {
+      currentTheme = theme;
+      if (theme === 'dark') {
+        root.removeAttribute('data-theme');
+        toggleBtn.classList.add('active');
+        themeLabel.textContent = 'Тёмная';
+        localStorage.setItem('theme', 'dark');
+      } else {
+        root.setAttribute('data-theme', 'light');
+        toggleBtn.classList.remove('active');
+        themeLabel.textContent = 'Светлая';
+        localStorage.setItem('theme', 'light');
+      }
+    }
+
+    const diplomaModal = document.getElementById('diplomaModal');
+    const openDiplomaBtn = document.getElementById('openDiplomaBtn');
+    const closeDiplomaBtn = document.getElementById('closeDiplomaBtn');
+
+    const goalsModal = document.getElementById('goalsModal');
+    const openGoalsBtn = document.getElementById('openGoalsBtn');
+    const closeGoalsBtn = document.getElementById('closeGoalsBtn');
+
+    function openModal(modal) {
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal(modal) {
+      modal.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    openDiplomaBtn.addEventListener('click', function() {
+      openModal(diplomaModal);
+    });
+    closeDiplomaBtn.addEventListener('click', function() {
+      closeModal(diplomaModal);
+    });
+    diplomaModal.addEventListener('click', function(e) {
+      if (e.target === diplomaModal) closeModal(diplomaModal);
+    });
+
+    openGoalsBtn.addEventListener('click', function() {
+      openModal(goalsModal);
+    });
+    closeGoalsBtn.addEventListener('click', function() {
+      closeModal(goalsModal);
+    });
+    goalsModal.addEventListener('click', function(e) {
+      if (e.target === goalsModal) closeModal(goalsModal);
+    });
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        if (diplomaModal.classList.contains('active')) closeModal(diplomaModal);
+        if (goalsModal.classList.contains('active')) closeModal(goalsModal);
+      }
+    });
+  })();
+</script>
+</body>
+</html>
