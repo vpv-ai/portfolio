@@ -143,7 +143,6 @@
       margin-bottom: 2.8rem;
     }
 
-    /* ===== ИМЯ: цвет зависит от темы ===== */
     .profile-info h1 {
       font-family: 'Playfair Display', serif;
       font-weight: 600;
@@ -196,7 +195,6 @@
       margin-top: 2.8rem;
     }
 
-    /* ===== ЗАГОЛОВКИ: цвет зависит от темы ===== */
     .section-title {
       font-family: 'Playfair Display', serif;
       font-weight: 600;
@@ -453,7 +451,7 @@
       font-weight: 600;
     }
 
-    .modal-list .diploma-place {
+    .modal-list .diploma-degree {
       opacity: 0.7;
       font-weight: 400;
     }
@@ -465,10 +463,42 @@
       margin-left: 0.5rem;
     }
 
+    .goals-content {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
     .goals-text {
       font-size: 1.1rem;
       line-height: 1.8;
       padding: 0.5rem 0;
+    }
+
+    .goals-image {
+      width: 100%;
+      border-radius: 1rem;
+      overflow: hidden;
+      border: 1px solid var(--card-border);
+    }
+
+    .goals-image img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .goals-image-placeholder {
+      width: 100%;
+      height: 200px;
+      background: var(--tag-bg);
+      border-radius: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      opacity: 0.5;
+      border: 2px dashed var(--card-border);
     }
 
     @media (max-width: 640px) {
@@ -575,13 +605,13 @@
       <button class="modal-close" id="closeDiplomaBtn">&times;</button>
     </div>
     <ul class="modal-list">
-      <li><span class="diploma-name">Биология (район)</span> <span class="diploma-place">1 место</span> <span class="diploma-year">2025–2026</span></li>
-      <li><span class="diploma-name">Биология (город)</span> <span class="diploma-place">1 место</span> <span class="diploma-year">2025–2026</span></li>
-      <li><span class="diploma-name">Химия (район)</span> <span class="diploma-place">3 место</span> <span class="diploma-year">2025–2026</span></li>
-      <li><span class="diploma-name">Русский язык (район)</span> <span class="diploma-place">2 степень</span> <span class="diploma-year">2025–2026</span></li>
-      <li><span class="diploma-name">Русский язык (город)</span> <span class="diploma-place">1 место</span> <span class="diploma-year">2025–2026</span></li>
-      <li><span class="diploma-name">Физика (команда, город)</span> <span class="diploma-place">1 место</span> <span class="diploma-year">2025–2026</span></li>
-      <li><span class="diploma-name">Химия (город)</span> <span class="diploma-place">3 место</span> <span class="diploma-year">2025–2026</span></li>
+      <li><span class="diploma-name">Биология (район)</span> <span class="diploma-degree">диплом I степени</span> <span class="diploma-year">2025–2026</span></li>
+      <li><span class="diploma-name">Биология (город)</span> <span class="diploma-degree">диплом I степени</span> <span class="diploma-year">2025–2026</span></li>
+      <li><span class="diploma-name">Химия (район)</span> <span class="diploma-degree">диплом III степени</span> <span class="diploma-year">2025–2026</span></li>
+      <li><span class="diploma-name">Русский язык (район)</span> <span class="diploma-degree">диплом II степени</span> <span class="diploma-year">2025–2026</span></li>
+      <li><span class="diploma-name">Русский язык (город)</span> <span class="diploma-degree">диплом I степени</span> <span class="diploma-year">2025–2026</span></li>
+      <li><span class="diploma-name">Физика (команда, город)</span> <span class="diploma-degree">диплом I степени</span> <span class="diploma-year">2025–2026</span></li>
+      <li><span class="diploma-name">Химия (команда, город)</span> <span class="diploma-degree">диплом III степени</span> <span class="diploma-year">2025–2026</span></li>
     </ul>
   </div>
 </div>
@@ -593,8 +623,19 @@
       <h2>Мои цели</h2>
       <button class="modal-close" id="closeGoalsBtn">&times;</button>
     </div>
-    <div class="goals-text">
-      <p>Хочу поступить в Нахимбио в лицей БГУ и обучиться на фармацевта.</p>
+    <div class="goals-content">
+      <div class="goals-text">
+        <p>Хочу поступить в Нахимбио в лицей БГУ и обучиться на фармацевта.</p>
+      </div>
+      <!-- ===== МЕСТО ДЛЯ КАРТИНКИ ЛИЦЕЯ БГУ ===== -->
+      <div class="goals-image">
+    
+        
+          <img src="image.jpg" alt="Лицей БГУ">
+                <div class="goals-image-placeholder">
+          🏫 Лицей БГУ<br><span style="font-size:0.8rem;">(здесь будет фото)</span>
+        </div>
+      </div>
     </div>
   </div>
 </div>
